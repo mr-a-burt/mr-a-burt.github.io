@@ -148,9 +148,6 @@ function nextGen() {
     movePrey();
     movePredator();
     // manage populations
-    huntingTime();
-    predatorPopulation();
-    
     preyPop = 0;
     var prey;
     for (var i = 0; i < preyGroup.length; i++) {
@@ -166,6 +163,7 @@ function nextGen() {
 		huntingTime();
 		preyGrowth();
 	}
+	predatorPopulation();
 	
     generationLable.text = generationLableText + generationCounter;
     preyLivingLable.text = preyLivingLableText + preyPop;

@@ -4,18 +4,99 @@
         <title>Predator-Prey Simulation</title>
         <script src="phaser.js"></script>
         <script src="script.js"></script>
+        <style>
+            body {
+                margin-left: 10%;
+                margin-right:10%;
+            }
+            h1.title {
+                text-align: center;
+            }
+            fieldset ul {
+                list-style-type: none;
+            }
+        </style>
     </head>
-    <body style="margin-left: 10%;margin-right:10%;">
-        <h1 style="text-align: center;">Predator-Prey Simulation</h1>
+    <body>
+        <h1>Predator-Prey Simulation</h1>
         
         <h2>Introduction</h2>
         <p>Observe the relationship between the populations of owls (predators) and mice (prey).</p>
         
         <h2>The Simulation</h2>
-        <script>var game = new Phaser.Game(800, 600, Phaser.AUTO, 'gameContainer', { preload: preload, create: create, update: update });</script>
         <div id="gameContainer"></div>
+        
         <h2>Details</h2>
         <p>An owl needs to eat three mice to survive. The owl can only catch mice that its image overlaps. For each three mice it eats, it has one baby. One owl will have at most three babies. If the owl starves (eats less than three mice), a baby owl will move into the area from elsewhere.</p>
         <p>Any mice that are not eaten will breed. The population of mice doubles each time they breed. However, the area has a maximum population it can support. If the mice population exceeds this maximum, it is reduced by half. The mimimum number of mice in the area is three, if it is less more mice will move in from elsewhere.</p>
+        
+        <h2>Assumptions</h2>
+        <p>This section allows you to adjust the assumptions used in the simulation. For your new assumptions to work, you will need to click the "Reset Simulation" button. Reload the page to return to the original assumptions.</p>
+        <fieldset>
+            <legend>Predator</legend>
+            <ul>
+                <li>
+                    <lable>Starting Population:
+                    <output id="predStartingVal">1</output>
+                    <input id="predStarting" type="range" min="1" max="30" value="1" step="1" oninput="predStartingVal.value = predStarting.valueAsNumber">
+                    </lable>
+                </li>
+                <li>
+                    <label>Minimum Catch to Survive:
+                    <output id="predMinEatVal">3</output>
+                    <input id="predMinEat" type="range" min="1" max="20" value="3" step="1" oninput="predMinEatVal.value = predMinEat.valueAsNumber">
+                    </label>
+                </li>
+                <li>
+                    <label>Maximum Catch:
+                        <output id="predMaxEatVal">9</output>
+                        <input id="predMaxEat" type="range" min="1" max="20" value="9" step="1" oninput="babyRate()">
+                    </label>
+                </li>
+                <li>
+                    <label>Prey Caught per Baby:
+                        <output id="predBabyRateVal">3</output>
+                        <input id="predBabyRate" type="range" min="1" max="10" value="3" step="1" oninput="babyRate()">
+                    </label>
+                </li>
+                <li>
+                    <label>Maximum Number of Babies:
+                        <output id="predBabyMaxVal">3</output>
+                    </label>
+                </li>
+            </ul>
+            <script>
+                function babyRate() {
+                    predBabyRateVal.value = predBabyRate.valueAsNumber;
+                    predMaxEatVal.value = predMaxEat.valueAsNumber;
+                    predBabyMaxVal.value = parseInt(predMaxEat.valueAsNumber / predBabyRate.valueAsNumber);
+                }
+            </script>
+        </fieldset>
+        
+        <fieldset>
+            <legend>Prey</legend>
+            <ul>
+                <li>
+                    <label>Starting Population:
+                    <output id="preyStartingVal">3</output>
+                    <input id="preyStarting" type="range" min="3" max="300" value="3" oninput="preyStartingVal.value = parseInt(preyStarting.value)"> 
+                    </label>
+                </li>
+                <li>
+                    <label>Population Growth Rate:
+                    <output id="preyGrowthRateVal">2.0</output>
+                    <input id="preyGrowthRate" type="range" min="1" max="5" value="2" step="0.1" oninput="preyGrowthRateVal.value = preyGrowthRate.valueAsNumber">
+                    </label>
+                </li>
+                <li>
+                    <label>Population Starvation Rate:</label>
+                    <output id="preyStarveRateVal">0.5</output>
+                    <input id="preyStarveRate" type="range" min="0" max="1" value="0.5" step="0.1" oninput="preyStarveRateVal.value = preyStarveRate.valueAsNumber">
+                </li>
+            </ul>
+        </fieldset>
+        
+        <script>var game = new Phaser.Game(800, 600, Phaser.AUTO, 'gameContainer', { preload: preload, create: create, update: update });</script>
     </body>
 </html>

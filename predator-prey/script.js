@@ -1,21 +1,21 @@
 // prey constants
 var PREY_MIN = 3;
 var PREY_MAX = 360; // requires restart to adjust
-var PREY_GROWTH_RATE = 2; // multiplier for the surviving prey
-var PREY_SURVIVAL_RATE = 0.5; // multiplier for survival when prey pop reaches max
+var PREY_GROWTH_RATE = 2; // multiplier for the surviving prey  //^
+var PREY_SURVIVAL_RATE = 0.5; // multiplier for survival when prey pop reaches max //^
 var PREY_RANGE = 30;  // max movement (+ve or -ve) in either direction
 
 // predator constants
 var PRED_MIN = 1;
-var PRED_MIN_EAT = 3;
-var PRED_MAX_EAT = 9;
-var PRED_REPRO_PREY = 3; // number of prey per baby
+var PRED_MIN_EAT = 3;  //^
+var PRED_MAX_EAT = 9; //^
+var PRED_REPRO_PREY = 3; // number of prey per baby //^
 var PRED_REPRO_MAX = 3; // max number of babies
 var PRED_RANGE = 300;  // max movement (+ve or -ve) in either direction
 
 // starting values;
-var STARTING_PREY = 3;
-var STARTING_PRED = 1;
+var STARTING_PREY = 3; //^
+var STARTING_PRED = 1; //^
 
 // sim boundaries
 var X_MIN = 20;
@@ -376,6 +376,7 @@ function resetSim() {
 			pred.kill();
 		}
     }
+	updateAssumptions();
 	generationLable.text = generationLableText + 0;
     preyLivingLable.text = preyLivingLableText + STARTING_PREY;
     preyConsumedLable.text = consumedLableText + 0;
@@ -383,4 +384,17 @@ function resetSim() {
     predBabiesLable.text = predBabiesLableText + 0;
     predStarvedLable.text = starvedLableText + 0;
     startSim();
+}
+
+function updateAssumptions() {
+	// predators 
+	STARTING_PRED = parseInt(document.getElementById("predStarting").value);
+	PRED_MIN_EAT = parseInt(document.getElementById("predMinEat").value);
+	PRED_MAX_EAT = parseInt(document.getElementById("predMaxEat").value);
+	PRED_REPRO_PREY = parseInt(document.getElementById("predBabyRate").value);
+	PRED_REPRO_MAX = parseInt(PRED_MAX_EAT / PRED_REPRO_PREY);
+	// prey
+	STARTING_PREY = parseInt(document.getElementById("preyStarting").value);
+	PREY_GROWTH_RATE = parseFloat(document.getElementById("preyGrowthRate").value);
+	PREY_SURVIVAL_RATE = parseFloat(document.getElementById("preyStarveRate").value);
 }

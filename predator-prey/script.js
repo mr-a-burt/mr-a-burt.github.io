@@ -84,7 +84,7 @@ function create() {
 
 function createPreyGroup() {
     preyGroup = game.add.group();
-    preyGroup.createMultiple(PREY_MAX * 2, 'prey');
+    preyGroup.createMultiple(1000, 'prey');
     preyGroup.setAll('anchor.x', 0.5);
     preyGroup.setAll('anchor.y', 0.5);
 }
@@ -164,7 +164,13 @@ function nextGen() {
 		preyGrowth();
 	}
 	predatorPopulation();
-	
+	preyPop = 0;
+    for (var i = 0; i < preyGroup.length; i++) {
+        prey = preyGroup.getAt(i);
+        if (prey.alive && !prey.consumed) {
+            preyPop++;
+        }
+    }
     generationLable.text = generationLableText + generationCounter;
     preyLivingLable.text = preyLivingLableText + preyPop;
     preyConsumedLable.text = consumedLableText + countConsumed;
